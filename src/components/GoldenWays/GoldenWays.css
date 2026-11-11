@@ -1,0 +1,22 @@
+.golden-ways {
+  margin-top: 56px;
+}
+
+.golden-ways__title {
+  margin: 0 0 8px;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 800;
+  color: var(--gold-light);
+}
+
+.golden-ways__intro {
+  max-width: 60ch;
+  margin: 0 0 24px;
+  color: var(--text-muted);
+}
+
+.golden-ways__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}

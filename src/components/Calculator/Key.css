@@ -1,0 +1,66 @@
+.key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-3);
+  color: var(--text);
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.key:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold-dark);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.18);
+}
+
+.key:active {
+  transform: scale(0.96);
+  box-shadow: none;
+}
+
+.key--operator {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: rgba(212, 175, 55, 0.35);
+  color: var(--gold-light);
+}
+
+.key--action {
+  background: var(--surface-2);
+  color: var(--text-muted);
+}
+
+.key--equals {
+  border-color: var(--gold);
+  background: linear-gradient(160deg, var(--gold-light), var(--gold) 55%, var(--gold-dark));
+  color: #1a1405;
+  font-weight: 700;
+}
+
+.key--equals:hover {
+  box-shadow: 0 8px 22px rgba(212, 175, 55, 0.4);
+}
+
+.key--wide {
+  grid-column: span 2;
+}
+
+.key--tall {
+  grid-row: span 2;
+}
+
+@media (max-width: 400px) {
+  .key {
+    min-height: 54px;
+    font-size: 1.25rem;
+  }
+}

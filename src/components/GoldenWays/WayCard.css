@@ -1,0 +1,45 @@
+.way-card {
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(145deg, var(--surface-2), var(--surface));
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.way-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-dark);
+  box-shadow: 0 12px 28px rgba(212, 175, 55, 0.12);
+}
+
+.way-card__category {
+  margin: 0 0 12px;
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.way-card__expression {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.way-card__result {
+  margin: 4px 0 12px;
+  color: var(--gold-light);
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.way-card__explanation {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}

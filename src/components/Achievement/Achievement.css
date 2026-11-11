@@ -1,0 +1,135 @@
+.achievement {
+  padding: 28px 24px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.achievement--locked {
+  border: 2px dashed var(--border);
+  background: rgba(20, 20, 27, 0.6);
+}
+
+.achievement--unlocked {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--gold);
+  background: linear-gradient(145deg, #2a2310, var(--surface) 70%);
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.25);
+  animation:
+    achievement-pop 0.5s ease-out,
+    achievement-glow 2.5s ease-in-out 0.5s infinite;
+}
+
+.achievement--unlocked::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 35%,
+    rgba(245, 215, 122, 0.18) 50%,
+    transparent 65%
+  );
+  transform: translateX(-100%);
+  animation: achievement-shine 3s ease-in-out 0.6s infinite;
+  pointer-events: none;
+}
+
+.achievement__badge {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 4px 12px;
+  border: 1px solid var(--gold-dark);
+  border-radius: 999px;
+  color: var(--gold-light);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.achievement__number {
+  margin: 0;
+  font-size: clamp(3rem, 12vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--gold-light);
+  text-shadow: 0 0 24px rgba(212, 175, 55, 0.5);
+}
+
+.achievement__number--locked {
+  color: var(--surface-3);
+  text-shadow: none;
+}
+
+.achievement__title {
+  margin: 8px 0;
+  font-size: clamp(1.25rem, 4vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.achievement__title--locked {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.achievement__text {
+  margin: 0 0 4px;
+  color: var(--text-muted);
+}
+
+.achievement__button {
+  position: relative;
+  z-index: 1;
+  margin-top: 16px;
+  padding: 12px 24px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  background: linear-gradient(160deg, var(--gold-light), var(--gold) 55%, var(--gold-dark));
+  color: #1a1405;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.achievement__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(212, 175, 55, 0.4);
+}
+
+.achievement__button:active {
+  transform: scale(0.97);
+}
+
+@keyframes achievement-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes achievement-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(212, 175, 55, 0.4);
+  }
+}
+
+@keyframes achievement-shine {
+  to {
+    transform: translateX(100%);
+  }
+}
