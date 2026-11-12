@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useReducer } from 'react'
-import { calculatorReducer, getDisplay, initialState } from '../utils/calculatorReducer'
+import {
+  calculatorReducer, getDisplay, hasEarnedAchievement, initialState, } from '../utils/calculatorReducer'
 import type { CalculatorAction } from '../utils/calculatorReducer'
 import { isOperator } from '../utils/evaluate'
 
@@ -47,6 +48,9 @@ export function useCalculator() {
     const action = labelToAction(label)
     if (action !== null) dispatch(action)
   }, [])
+  
+  // Usado pelo botão "Fazer outra operação" da conquista.
+  const reset = useCallback(() => dispatch({ type: 'clear' }), [])
 
   // Evento 2: teclado físico.
   useEffect(() => {
@@ -79,5 +83,10 @@ export function useCalculator() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  return { ...getDisplay(state), pressKey }
+  return {
+    ...getDisplay(state),
+    isGolden: hasEarnedAchievement(state),
+    pressKey,
+    reset,
+  }
 }

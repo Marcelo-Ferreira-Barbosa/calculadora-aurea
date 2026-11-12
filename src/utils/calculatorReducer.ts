@@ -1,6 +1,7 @@
 import { evaluate, isOperator } from './evaluate'
 import type { EvaluationError, Operator } from './evaluate'
 import { formatNumber } from './formatNumber'
+import { isGoldenResult } from './isGoldenResult'
 
 export const MAX_DIGITS = 15
 
@@ -183,4 +184,16 @@ export function getDisplay(state: CalculatorState): DisplayContent {
     result: state.output,
     isError: state.status === 'error',
   }
+}
+// ---------- Conquista ----------
+
+/**
+ * A conquista só existe depois de "=" (status "result") e se houve de fato
+ * uma operação (pelo menos número, operador, número). Digitar só "67" e
+ * pressionar "=" não conta.
+ */
+export function hasEarnedAchievement(state: CalculatorState): boolean {
+  if (state.status !== 'result') return false
+  if (state.tokens.length < 3) return false
+  return isGoldenResult(Number(state.output))
 }
