@@ -6,32 +6,53 @@
   background: #0d0d12;
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
   text-align: right;
+  /* Permite que a fonte do resultado use a largura do display (unidade cqi). */
+  container-type: inline-size;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .display__expression {
   min-height: 1.5em;
   color: var(--text-muted);
   font-size: 1rem;
-  overflow-wrap: anywhere;
+  /* Uma linha só: expressões longas rolam em vez de aumentar o display. */
+  white-space: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.display__expression::-webkit-scrollbar {
+  display: none;
 }
 
 .display__result {
-  display: block;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  /* Altura fixa: o teclado não "pula" quando o número muda de tamanho. */
+  height: calc(clamp(2.25rem, 9vw, 3rem) * 1.15);
   margin-top: 4px;
   color: var(--gold-light);
-  font-size: clamp(2.25rem, 9vw, 3rem);
   font-weight: 600;
   line-height: 1.15;
   font-variant-numeric: tabular-nums;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  /* Reserva para navegadores sem container queries. */
+  font-size: clamp(2.25rem, 9vw, 3rem);
+  /* A fonte encolhe só o necessário para o número caber. */
+  font-size: clamp(
+    1rem,
+    calc(100cqi / (var(--chars, 1) * 0.65)),
+    clamp(2.25rem, 9vw, 3rem)
+  );
 }
+
 .display__result--error {
   color: #ff9b8a;
   font-size: 1.5rem;
   font-weight: 600;
-}
-.display {
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .display--golden {

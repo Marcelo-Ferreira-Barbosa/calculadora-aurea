@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import './Achievement.css'
 
 interface AchievementProps {
@@ -6,12 +7,24 @@ interface AchievementProps {
 }
 
 function Achievement({ unlocked, onReset }: AchievementProps) {
+  const sectionRef = useRef<HTMLElement>(null)
+
+  // No celular o painel fica abaixo do teclado: ao desbloquear, traz ele para a tela.
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!unlocked || section === null) return
+    if (!window.matchMedia('(max-width: 820px)').matches) return
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    section.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest' })
+  }, [unlocked])
+
   const className = `achievement ${
     unlocked ? 'achievement--unlocked' : 'achievement--locked'
   }`
 
   return (
-    <section className={className} aria-label="Conquista" aria-live="polite">
+    <section ref={sectionRef} className={className} aria-label="Conquista" aria-live="polite">
       {unlocked ? (
         <>
           <p className="achievement__badge">Conquista desbloqueada</p>

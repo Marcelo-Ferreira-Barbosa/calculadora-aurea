@@ -49,6 +49,11 @@ function countDigits(token: string): number {
   return token.replace('.', '').length
 }
 
+// Resultados em notação científica (ex.: "1e+28") não são editados dígito a dígito.
+function isEditableNumber(token: string): boolean {
+  return !token.includes('e')
+}
+
 // ---------- Uma função por ação ----------
 
 function inputDigit(state: CalculatorState, digit: string): CalculatorState {
@@ -62,6 +67,7 @@ function inputDigit(state: CalculatorState, digit: string): CalculatorState {
   if (last === undefined || isOperator(last)) {
     return { ...state, tokens: [...state.tokens, digit] }
   }
+  if (!isEditableNumber(last)) return state
   if (last === '0') return replaceLast(state, digit) // evita "007"
   if (countDigits(last) >= MAX_DIGITS) return state
   return replaceLast(state, last + digit)
@@ -77,7 +83,7 @@ function inputDecimal(state: CalculatorState): CalculatorState {
   if (last === undefined || isOperator(last)) {
     return { ...state, tokens: [...state.tokens, '0.'] }
   }
-  if (last.includes('.')) return state // um número só pode ter um ponto
+  if (!isEditableNumber(last) || last.includes('.')) return state // um número só pode ter um ponto
   if (countDigits(last) >= MAX_DIGITS) return state
   return replaceLast(state, last + '.')
 }
@@ -134,7 +140,7 @@ function deleteLast(state: CalculatorState): CalculatorState {
 
   const shortened = last.slice(0, -1)
   // Se não sobrou número válido (vazio, "-" etc.), remove o token inteiro.
-  if (shortened === '' || Number.isNaN(Number(shortened))) {
+  if (!isEditableNumber(last) || shortened === '' || Number.isNaN(Number(shortened))) {
     return { ...state, tokens: state.tokens.slice(0, -1) }
   }
   return replaceLast(state, shortened)
@@ -185,6 +191,7 @@ export function getDisplay(state: CalculatorState): DisplayContent {
     isError: state.status === 'error',
   }
 }
+
 // ---------- Conquista ----------
 
 /**

@@ -79,7 +79,7 @@ export const waysTo67: WayExample[] = [
     expression: '33.5 × 2',
     result: 67,
     explanation:
-      'O dobro de 33,5 é 67. Como 67 é primo, nenhum produto de dois inteiros maiores que 1 chega nele; por isso entram decimais.',
+      'O dobro de 33.5 é 67 (na calculadora, o separador decimal é o ponto). Como 67 é primo, nenhum produto de dois inteiros maiores que 1 chega nele; por isso entram decimais.',
   },
   {
     id: 'multiplicacao-3',

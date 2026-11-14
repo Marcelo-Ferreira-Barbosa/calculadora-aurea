@@ -12,7 +12,7 @@ interface CalculatorProps {
 
 function Calculator({ expression, result, isError, isGolden, onKeyPress }: CalculatorProps) {
   return (
-    <section className="calculator" aria-label="Calculadora">
+    <section className="calculator" aria-label="Calculadora" id="calculadora" tabIndex={-1}>
       <Display
         expression={expression}
         result={result}

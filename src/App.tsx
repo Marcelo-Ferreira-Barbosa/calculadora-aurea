@@ -8,6 +8,12 @@ import './App.css'
 function App() {
   const { expression, result, isError, isGolden, pressKey, reset } = useCalculator()
 
+  function handleReset() {
+    reset()
+    // O botão "Fazer outra operação" some ao limpar; devolve o foco à calculadora.
+    document.getElementById('calculadora')?.focus()
+  }
+
   return (
     <>
       <Header />
@@ -21,7 +27,7 @@ function App() {
             onKeyPress={pressKey}
           />
           <div className="app-side">
-            <Achievement unlocked={isGolden} onReset={reset} />
+            <Achievement unlocked={isGolden} onReset={handleReset} />
           </div>
         </div>
         <GoldenWays />

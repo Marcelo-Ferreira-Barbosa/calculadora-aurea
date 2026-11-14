@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+import type { CSSProperties } from 'react'
 import './Display.css'
 
 interface DisplayProps {
@@ -13,6 +15,14 @@ function Display({
   isError = false,
   isGolden = false,
 }: DisplayProps) {
+  const expressionRef = useRef<HTMLDivElement>(null)
+
+  // Expressões longas rolam na horizontal; mantém o final (o que se acabou de digitar) visível.
+  useEffect(() => {
+    const element = expressionRef.current
+    if (element) element.scrollLeft = element.scrollWidth
+  }, [expression])
+
   const displayClass = isGolden ? 'display display--golden' : 'display'
 
   const resultClass = [
@@ -23,10 +33,15 @@ function Display({
     .filter(Boolean)
     .join(' ')
 
+  // --chars deixa o CSS ajustar o tamanho da fonte ao tamanho do texto.
+  const resultStyle = { '--chars': result.length } as CSSProperties
+
   return (
     <div className={displayClass}>
-      <div className="display__expression">{expression}</div>
-      <output className={resultClass} aria-live="polite">
+      <div className="display__expression" ref={expressionRef}>
+        {expression}
+      </div>
+      <output className={resultClass} style={resultStyle} aria-live="polite">
         {result}
       </output>
     </div>
