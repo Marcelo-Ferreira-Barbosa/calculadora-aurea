@@ -8,10 +8,18 @@ export interface KeyConfig {
   tall?: boolean
 }
 
+export type WayCategory =
+  | 'Adição'
+  | 'Subtração'
+  | 'Multiplicação'
+  | 'Divisão'
+  | 'Combinada'
+
 export interface WayExample {
   id: string
-  category: string
+  category: WayCategory
   expression: string
   result: number
   explanation: string
+  steps?: string[]
 }

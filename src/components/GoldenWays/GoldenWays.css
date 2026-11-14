@@ -20,3 +20,9 @@
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
 }
+
+.golden-ways__count {
+  margin: 0 0 16px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}

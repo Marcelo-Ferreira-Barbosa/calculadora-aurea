@@ -43,3 +43,26 @@
   color: var(--text-muted);
   font-size: 0.95rem;
 }
+
+.way-card__steps {
+  margin: 14px 0 0;
+  padding: 12px 0 0 1.4rem;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.way-card__steps li {
+  padding: 2px 0;
+}
+
+.way-card__steps li::marker {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.way-card__steps li:last-child {
+  color: var(--gold-light);
+  font-weight: 600;
+}
