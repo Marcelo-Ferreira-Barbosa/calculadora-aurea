@@ -15,9 +15,9 @@
   border: 1px solid var(--gold);
   background: linear-gradient(145deg, #2a2310, var(--surface) 70%);
   box-shadow: 0 0 40px rgba(212, 175, 55, 0.25);
-  animation:
+    animation:
     achievement-pop 0.5s ease-out,
-    achievement-glow 2.5s ease-in-out 0.5s infinite;
+    achievement-glow 2s ease-in-out 0.5s 2;
 }
 
 .achievement--unlocked::after {
@@ -121,10 +121,10 @@
 @keyframes achievement-glow {
   0%,
   100% {
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.25);
   }
   50% {
-    box-shadow: 0 0 50px rgba(212, 175, 55, 0.4);
+    box-shadow: 0 0 55px rgba(212, 175, 55, 0.45);
   }
 }
 

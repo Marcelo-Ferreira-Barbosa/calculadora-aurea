@@ -14,6 +14,16 @@ export function isOperator(token: string): token is Operator {
 
 const INVALID: EvaluationResult = { ok: false, error: 'invalid' }
 
+// Number("") vale 0 e Number("0x10") vale 16; por isso só aceitamos o formato que a
+// calculadora realmente produz: "5", "-5", "0.5", "1e+28", "3.3e-9".
+const NUMBER_TOKEN = /^-?\d+(\.\d+)?(e[+-]?\d+)?$/i
+
+function parseNumber(token: string): number | null {
+  if (!NUMBER_TOKEN.test(token)) return null
+  const value = Number(token)
+  return Number.isFinite(value) ? value : null
+}
+
 /**
  * Calcula uma lista de tokens como ['8', '×', '8', '+', '3'].
  * Respeita a precedência: × e ÷ são resolvidos antes de + e −.
@@ -22,8 +32,8 @@ export function evaluate(tokens: readonly string[]): EvaluationResult {
   // Formato válido: número (operador número)*, ou seja, tamanho ímpar.
   if (tokens.length === 0 || tokens.length % 2 === 0) return INVALID
 
-  const first = Number(tokens[0])
-  if (!Number.isFinite(first)) return INVALID
+  const first = parseNumber(tokens[0])
+  if (first === null) return INVALID
 
   // Passada 1: resolve × e ÷ na hora; guarda os + e − para a passada 2.
   const numbers: number[] = [first]
@@ -31,9 +41,9 @@ export function evaluate(tokens: readonly string[]): EvaluationResult {
 
   for (let i = 1; i < tokens.length; i += 2) {
     const operator = tokens[i]
-    const right = Number(tokens[i + 1])
+    const right = parseNumber(tokens[i + 1])
 
-    if (!isOperator(operator) || !Number.isFinite(right)) return INVALID
+    if (!isOperator(operator) || right === null) return INVALID
 
     if (operator === '×' || operator === '÷') {
       if (operator === '÷' && right === 0) {

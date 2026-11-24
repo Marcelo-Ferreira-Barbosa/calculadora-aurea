@@ -53,6 +53,26 @@ describe('evaluate', () => {
     expect(evaluate(tokens)).toEqual({ ok: false, error: 'invalid' })
   })
 
+  it.each([
+    [['', '+', '5']],
+    [[' ', '+', '5']],
+    [['5', '+', '']],
+    [['0x10', '+', '1']],
+    [['Infinity', '+', '1']],
+    [['1e999', '+', '1']],
+    [['5.', '+', '1']],
+    [['.5', '+', '1']],
+  ])('rejeita número em formato estranho %j', (tokens) => {
+    expect(evaluate(tokens)).toEqual({ ok: false, error: 'invalid' })
+  })
+
+  it('aceita os formatos que a calculadora produz', () => {
+    expect(evaluate(['-5', '+', '10'])).toEqual({ ok: true, value: 5 })
+    expect(evaluate(['1e+28', '×', '1'])).toEqual({ ok: true, value: 1e28 })
+    expect(evaluate(['3.3e-9', '+', '0'])).toEqual({ ok: true, value: 3.3e-9 })
+    expect(evaluate(['0.5', '×', '4'])).toEqual({ ok: true, value: 2 })
+  })
+
   it('rejeita resultado que estoura o limite numérico', () => {
     expect(evaluate(['1e308', '×', '10'])).toEqual({ ok: false, error: 'invalid' })
   })

@@ -56,7 +56,7 @@ Reunir três ideias em um projeto pequeno e bem organizado:
 - 17 exemplos em 5 categorias (adição, subtração, multiplicação, divisão e combinada).
 - Filtro por categoria.
 - Passo a passo nas contas com mais de uma etapa.
-- Os exemplos vêm de um arquivo de dados (`src/data/waysTo67.ts`) e são conferidos automaticamente pelo script `npm run verify:ways`.
+- Os exemplos vêm de um arquivo de dados (`src/data/waysTo67.ts`) e são conferidos automaticamente pelos testes (`npm run test`).
 
 **Interface e acessibilidade**
 
@@ -102,8 +102,6 @@ Reunir três ideias em um projeto pequeno e bem organizado:
 calculadora-aurea/
 ├── public/
 │   └── favicon.svg
-├── scripts/
-│   └── verifyWays.ts          # confere se todos os exemplos dão 67
 ├── src/
 │   ├── components/
 │   │   ├── Achievement/       # painel da conquista (bloqueada e desbloqueada)
@@ -121,6 +119,7 @@ calculadora-aurea/
 │   │   ├── evaluate.ts           # avaliador de expressões (sem eval)
 │   │   ├── formatNumber.ts       # formatação do resultado
 │   │   ├── isGoldenResult.ts     # comparação com tolerância
+│   │   ├── keyMapping.ts         # mapeamento das teclas
 │   │   └── *.test.ts             # testes (Vitest)
 │   ├── App.tsx
 │   ├── App.css
@@ -135,7 +134,7 @@ A lógica matemática fica em `src/utils/`, em funções puras, sem React. Isso 
 
 ## Pré-requisitos
 
-- [Node.js](https://nodejs.org/) **22.18 ou superior** (recomendado: a versão LTS atual). O Vite funciona a partir do Node 20.19 ou 22.12, mas o script `verify:ways` executa TypeScript diretamente e exige a 22.18+.
+- [Node.js](https://nodejs.org/) **20.19+ ou 22.12+** (requisito do Vite; recomendado: a versão LTS atual)
 - npm (já vem com o Node.js).
 - [Git](https://git-scm.com/) para clonar o repositório.
 
@@ -174,7 +173,6 @@ Abra o endereço mostrado no terminal (normalmente `http://localhost:5173`).
 | `npm run lint` | Analisa o código com o Oxlint |
 | `npm run test` | Roda os testes automatizados uma vez |
 | `npm run test:watch` | Roda os testes e reexecuta a cada alteração |
-| `npm run verify:ways` | Confere se todos os exemplos da seção educativa resultam em 67 |
 
 ## Exemplos de operações que resultam em 67
 
@@ -195,11 +193,11 @@ Os testes automatizados cobrem a lógica da calculadora:
 - avaliador de expressões: precedência, decimais, divisão por zero e entradas inválidas;
 - reducer: encadeamento, limpar, apagar, comportamento depois do `=`, limites e notação científica;
 - formatação de números e comparação com tolerância;
-- conquista: casos que devem e que não devem disparar (66, 68, `67.001` e `67 =` sozinho, entre outros).
+- conquista: casos que devem e que não devem disparar (66, 68, `67.001` e `67 =` sozinho, entre outros);
+- exemplos da seção educativa: toda conta e todo passo conferidos com o avaliador da calculadora.
 
 ```bash
 npm run test
-npm run verify:ways
 ```
 
 ## Melhorias futuras

@@ -1,44 +1,11 @@
 import { useCallback, useEffect, useReducer } from 'react'
 import {
-  calculatorReducer, getDisplay, hasEarnedAchievement, initialState, } from '../utils/calculatorReducer'
-import type { CalculatorAction } from '../utils/calculatorReducer'
-import { isOperator } from '../utils/evaluate'
-
-/** Converte o rótulo de uma tecla (botão ou teclado físico) em uma ação. */
-function labelToAction(label: string): CalculatorAction | null {
-  if (/^[0-9]$/.test(label)) return { type: 'digit', digit: label }
-  if (isOperator(label)) return { type: 'operator', operator: label }
-
-  switch (label) {
-    case '.':
-      return { type: 'decimal' }
-    case '=':
-      return { type: 'equals' }
-    case 'C':
-      return { type: 'clear' }
-    case '⌫':
-      return { type: 'backspace' }
-    default:
-      return null
-  }
-}
-
-/** Traduz teclas do computador para os rótulos usados pelos botões. */
-const KEYBOARD_TO_LABEL: Partial<Record<string, string>> = {
-  '+': '+',
-  '-': '−',
-  '*': '×',
-  x: '×',
-  X: '×',
-  '/': '÷',
-  '.': '.',
-  ',': '.',
-  '=': '=',
-  Enter: '=',
-  Backspace: '⌫',
-  Delete: 'C',
-  Escape: 'C',
-}
+  calculatorReducer,
+  getDisplay,
+  hasEarnedAchievement,
+  initialState,
+} from '../utils/calculatorReducer'
+import { keyboardKeyToAction, labelToAction } from '../utils/keyMapping'
 
 export function useCalculator() {
   const [state, dispatch] = useReducer(calculatorReducer, initialState)
@@ -48,7 +15,7 @@ export function useCalculator() {
     const action = labelToAction(label)
     if (action !== null) dispatch(action)
   }, [])
-  
+
   // Usado pelo botão "Fazer outra operação" da conquista.
   const reset = useCallback(() => dispatch({ type: 'clear' }), [])
 
@@ -67,10 +34,7 @@ export function useCalculator() {
         if (inOtherButton) return
       }
 
-      const label = /^[0-9]$/.test(event.key) ? event.key : KEYBOARD_TO_LABEL[event.key]
-      if (label === undefined) return
-
-      const action = labelToAction(label)
+      const action = keyboardKeyToAction(event.key)
       if (action === null) return
 
       // Evita que o Enter "clique" de novo no último botão focado, e que o "/"
